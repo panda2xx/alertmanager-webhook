@@ -4,6 +4,7 @@ export ENABLE_LOGGING=true
 
 ## discord
 >default type is discord
+
 export NOTIFIER_TYPE=discord
 export DISCORD_WEBHOOK=""
 
