@@ -70,12 +70,14 @@ func (d *DiscordNotifier) createDiscordPayload(payload model.WebhookPayload) mod
 	for _, alert := range payload.Alerts {
 		description.WriteString(fmt.Sprintf("**Status**: %s\n", alert.Status))
 
-		if len(alert.Labels) > 0 {
-			description.WriteString("**Labels**:\n")
-			for key, value := range alert.Labels {
-				description.WriteString(fmt.Sprintf("- `%s`: `%s`\n", key, value))
+		/*
+			if len(alert.Labels) > 0 {
+				description.WriteString("**Labels**:\n")
+				for key, value := range alert.Labels {
+					description.WriteString(fmt.Sprintf("- `%s`: `%s`\n", key, value))
+				}
 			}
-		}
+		*/
 
 		if summary, ok := alert.Annotations["summary"]; ok {
 			description.WriteString(fmt.Sprintf("**Summary**: %s\n", summary))
@@ -88,9 +90,9 @@ func (d *DiscordNotifier) createDiscordPayload(payload model.WebhookPayload) mod
 	embed := model.Embed{
 		Title:       fmt.Sprintf("%s [%s] %s", emoji, strings.ToUpper(payload.Status), payload.CommonLabels["alertname"]),
 		Description: description.String(),
-		URL:         payload.ExternalURL,
-		Color:       color,
-		Timestamp:   time.Now().Format(time.RFC3339),
+		// URL:         payload.ExternalURL,
+		Color:     color,
+		Timestamp: time.Now().Format(time.RFC3339),
 		Footer: &model.Footer{
 			Text: "Alertmanager Webhook",
 		},

@@ -66,12 +66,14 @@ func (t *TelegramNotifier) createTelegramPayload(payload model.WebhookPayload) m
 	message.WriteString(fmt.Sprintf("*%s [%s] %s*\n\n", emoji, strings.ToUpper(payload.Status), payload.CommonLabels["alertname"]))
 
 	for _, alert := range payload.Alerts {
-		if len(alert.Labels) > 0 {
-			message.WriteString("*Labels*:\n")
-			for key, value := range alert.Labels {
-				message.WriteString(fmt.Sprintf("- `%s`: `%s`\n", key, value))
+		/*
+			if len(alert.Labels) > 0 {
+				message.WriteString("*Labels*:\n")
+				for key, value := range alert.Labels {
+					message.WriteString(fmt.Sprintf("- `%s`: `%s`\n", key, value))
+				}
 			}
-		}
+		*/
 
 		if summary, ok := alert.Annotations["summary"]; ok {
 			message.WriteString(fmt.Sprintf("*Summary*: %s\n", summary))
